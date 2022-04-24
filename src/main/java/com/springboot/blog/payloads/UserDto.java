@@ -3,6 +3,9 @@ package com.springboot.blog.payloads;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @Getter
@@ -10,14 +13,21 @@ import lombok.Setter;
 public class UserDto {
     // UserDto will have only fields which are receiving from user end
     //Exposing directly to API's
-
+    @NotNull
     private int id;
 
+    @NotEmpty
+    @Size(min = 4, message = "Name must be of min length 4")
     private String name;
 
+    @Email(message = "Email address is not valid!")
     private String email;
 
+    @NotEmpty
+    @Size(min = 3,max = 10, message = "Password must be min of 3 chars and max of 10 chars")
+    //@Pattern(regexp="^[a-zA-Z0-9]{8}",message="Must contain smallcase , uppercase and number")
     private String password;
 
+    @NotEmpty
     private String about;
 }
