@@ -13,6 +13,10 @@ import javax.validation.constraints.*;
 public class UserDto {
     // UserDto will have only fields which are receiving from user end
     //Exposing directly to API's
+
+    //JPA is Specification and Hibernate is ORM implementation
+    //Hibernate Validator is implementation of validation API - (JSR 380 known as Bean Validator 2.0 which validates JAva beans)
+
     @NotNull
     private int id;
 

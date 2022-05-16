@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //If Entity create kiya to corresponding table me Table bhi create honga User nam se
 //table name chnage k liye @Table use kre
@@ -29,4 +31,6 @@ public class User {
 
     private String about;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }
