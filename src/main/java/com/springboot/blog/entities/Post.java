@@ -1,9 +1,16 @@
 package com.springboot.blog.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "post")
 public class Post {
 
@@ -19,7 +26,7 @@ public class Post {
     private Date addedDate;
 
     @ManyToOne
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id",nullable = false) // Validations are in DTO class , but mappings and Column names are in Entity Class
     private Category category;
     @ManyToOne
     private User user;

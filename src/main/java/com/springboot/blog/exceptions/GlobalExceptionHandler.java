@@ -17,7 +17,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse> responceNotFoundExceptionHandler(ResourceNotFoundException ex){
+    public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex){
         String message = ex.getMessage();
         ApiResponse apiResponse = new ApiResponse(message, false);
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
