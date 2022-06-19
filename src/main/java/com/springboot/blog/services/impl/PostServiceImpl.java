@@ -11,6 +11,10 @@ import com.springboot.blog.repositories.UserRepo;
 import com.springboot.blog.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -51,22 +55,40 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO updatePost(PostDTO postDTO, Integer postId) {
-        return null;
+
+        Post post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
+        post.setTitle(postDTO.getTitle());
+        post.setContent(postDTO.getContent());
+        post.setImageName(postDTO.getImageName());
+
+        Post updatedPost = this.postRepo.save(post);
+        return this.modelMapper.map(updatedPost, PostDTO.class);
     }
 
     @Override
     public void deletePost(Integer postId) {
 
+        Post post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
+        this.postRepo.delete(post);
     }
 
     @Override
-    public List<PostDTO> getAllPost() {
-        return null;
+    public List<PostDTO> getAllPost(Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Page<Post> pagesOfPosts = this.postRepo.findAll(pageable);
+        List<Post> posts = pagesOfPosts.getContent();
+
+        List<PostDTO> postDTOList = posts.stream().map(post -> this.modelMapper.map(post,PostDTO.class)).collect(Collectors.toList());
+        return postDTOList;
     }
 
     @Override
     public PostDTO getPostById(Integer postId) {
-        return null;
+
+        Post post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
+
+        return this.modelMapper.map(post, PostDTO.class);
     }
 
     @Override

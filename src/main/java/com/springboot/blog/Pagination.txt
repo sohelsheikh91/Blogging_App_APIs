@@ -1,0 +1,15 @@
+Pass pageNumber and pageSize
+sort by any one field
+localhost:8081/posts?pageNumber=1&pageSize=5&sortBy=title
+
+pageNumber = 0 //start from 0
+pageSize = 5 //means 5 objects in one page
+
+
+Pagination. Pagination is the process of dividing data into suitable chunks to save resources.
+PagingAndSortingRepository. PagingAndSortingRepository is an extension of CrudRepository
+to provide additional methods to retrieve entities using pagination and sorting.
+
+public interface JpaRepository<T, ID> extends PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T> {
+
+

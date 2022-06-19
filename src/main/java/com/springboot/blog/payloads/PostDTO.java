@@ -14,6 +14,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class PostDTO {
+
+    private Integer postId;
     @NotEmpty
     @Size(min = 5, message = "Title must be of min length 5")
     private String title;

@@ -1,6 +1,7 @@
 package com.springboot.blog.controllers;
 
 import com.springboot.blog.entities.Post;
+import com.springboot.blog.payloads.ApiResponse;
 import com.springboot.blog.payloads.PostDTO;
 import com.springboot.blog.services.PostService;
 import com.springboot.blog.services.impl.PostServiceImpl;
@@ -27,8 +28,22 @@ public class PostController {
 
         return new ResponseEntity<PostDTO>(createPost, HttpStatus.CREATED);
     }
+    //Get ALL Posts
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer number,
+                                                     @RequestParam(name = "pageSize", defaultValue = "1", required = false) Integer size){
 
-    //Get Post by Category
+        List<PostDTO> postDTOList = this.postService.getAllPost(number, size);
+        return new ResponseEntity<>(postDTOList, HttpStatus.OK);
+    }
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDTO> getAllPosts(@PathVariable Integer postId){
+
+        PostDTO postDTO = this.postService.getPostById(postId);
+        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+    }
+
+    //Get Post by Users
     @GetMapping("/user/{userId}/posts")
     public ResponseEntity<List<PostDTO>> getPostsByUser(@PathVariable Integer userId){
 
@@ -43,5 +58,17 @@ public class PostController {
         return new ResponseEntity<List<PostDTO>>(postDTOList, HttpStatus.OK);
     }
 
+    //Delete Post by Id
+    @DeleteMapping("posts/{postId}")
+    public ApiResponse deletePost(@PathVariable Integer postId){
+        this.postService.deletePost(postId);
+        return new ApiResponse("Post Deleted Successfully", true);
+    }
+    //Update Post
+    @PutMapping("posts/{postId}")
+    public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable Integer postId){
+        PostDTO updatedPostDTO = this.postService.updatePost(postDTO, postId);
+        return new ResponseEntity<>(updatedPostDTO, HttpStatus.OK);
+    }
 }
 
