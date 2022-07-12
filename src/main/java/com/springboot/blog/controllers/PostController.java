@@ -3,6 +3,7 @@ package com.springboot.blog.controllers;
 import com.springboot.blog.entities.Post;
 import com.springboot.blog.payloads.ApiResponse;
 import com.springboot.blog.payloads.PostDTO;
+import com.springboot.blog.payloads.PostResponse;
 import com.springboot.blog.services.PostService;
 import com.springboot.blog.services.impl.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class PostController {
     }
     //Get ALL Posts
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer number,
-                                                     @RequestParam(name = "pageSize", defaultValue = "1", required = false) Integer size){
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer number,
+                                                     @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer size){
 
-        List<PostDTO> postDTOList = this.postService.getAllPost(number, size);
-        return new ResponseEntity<>(postDTOList, HttpStatus.OK);
+        PostResponse postResponse = this.postService.getAllPost(number, size);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
     //get posts by ID
     @GetMapping("/posts/{postId}")
