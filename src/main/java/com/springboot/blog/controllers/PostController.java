@@ -49,17 +49,26 @@ public class PostController {
 
     //Get Post by Users
     @GetMapping("/user/{userId}/posts")
-    public ResponseEntity<List<PostDTO>> getPostsByUser(@PathVariable Integer userId){
+    public ResponseEntity<PostResponse> getPostsByUser(@PathVariable Integer userId,
+                                                        @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer number,
+                                                        @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer size,
+                                                        @RequestParam(name = "sortBy", defaultValue = "postId", required = false) String sortBy,
+                                                        @RequestParam(name = "sortDir", defaultValue = "asc", required = false) String sortDir){
 
-        List<PostDTO> postDTOList = this.postService.getPostsByUser(userId);
-        return new ResponseEntity<>(postDTOList, HttpStatus.OK);
+
+        PostResponse postResponse = this.postService.getPostsByUser(userId, number, size, sortBy, sortDir);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
     //Get Posts by Category
     @GetMapping("/category/{categoryId}/posts")
-    public ResponseEntity<List<PostDTO>> getPostsByCategory(@PathVariable Integer categoryId){
+    public ResponseEntity<PostResponse> getPostsByCategory(@PathVariable Integer categoryId,
+                                                            @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer number,
+                                                            @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer size,
+                                                            @RequestParam(name = "sortBy", defaultValue = "postId", required = false) String sortBy,
+                                                            @RequestParam(name = "sortDir", defaultValue = "asc", required = false) String sortDir){
 
-        List<PostDTO> postDTOList = this.postService.getPostsByCategory(categoryId);
-        return new ResponseEntity<List<PostDTO>>(postDTOList, HttpStatus.OK);
+        PostResponse postResponse = this.postService.getPostsByCategory(categoryId, number, size, sortBy, sortDir);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
     //Delete Post by Id
