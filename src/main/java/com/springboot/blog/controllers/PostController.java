@@ -19,7 +19,7 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private PostServiceImpl postService;
+    private PostService postService;
 
     //create
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
@@ -32,9 +32,11 @@ public class PostController {
     //Get ALL Posts
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPosts(@RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer number,
-                                                     @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer size){
+                                                    @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer size,
+                                                    @RequestParam(name = "sortBy", defaultValue = "postId", required = false) String sortBy,
+                                                    @RequestParam(name = "sortDir", defaultValue = "asc", required = false) String sortDir){
 
-        PostResponse postResponse = this.postService.getAllPost(number, size);
+        PostResponse postResponse = this.postService.getAllPost(number, size, sortBy, sortDir);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
     //get posts by ID
