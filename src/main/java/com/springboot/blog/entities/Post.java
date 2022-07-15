@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Getter
@@ -37,4 +37,6 @@ public class Post {
     Hibernate: alter table post add constraint FKr7g7up9a3358c3sycj8ihw41v foreign key (category_category_id) references categories (category_id)
     Hibernate: alter table post add constraint FK7ky67sgi7k0ayf22652f7763r foreign key (user_id) references users (id)
     */
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Comment> comments = new HashSet<>();
 }

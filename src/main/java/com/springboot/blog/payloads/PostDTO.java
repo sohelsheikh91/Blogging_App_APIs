@@ -9,6 +9,8 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,4 +31,5 @@ public class PostDTO {
     private CategoryDTO category;   //Use DTO as it doesn't have List<Post> posts , otherwise it will cause infinite Recursion with category ->post ->category
     // Dont use @ManyToOne or @Column name here , Only Validations we do in DTO
     private UserDto user;
+    private Set<CommentDTO> comments = new HashSet<>();  //We will get all comments in Post only, No need to write seperate API for GET and other Ops.
 }
