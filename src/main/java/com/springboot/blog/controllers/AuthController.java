@@ -1,6 +1,6 @@
 package com.springboot.blog.controllers;
 
-import com.springboot.blog.exceptions.InvalidCredentials;
+import com.springboot.blog.exceptions.ApiException;
 import com.springboot.blog.payloads.JwtAuthRequest;
 import com.springboot.blog.security.JWTAuthResponse;
 import com.springboot.blog.security.JwtTokenHelper;
@@ -55,7 +55,7 @@ public class AuthController {
             this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         }catch (BadCredentialsException e){
             System.out.println("Invalid Credentials");
-            throw new InvalidCredentials("Invalid Credentials");
+            throw new ApiException("Invalid Credentials");
         }
     }
 }
