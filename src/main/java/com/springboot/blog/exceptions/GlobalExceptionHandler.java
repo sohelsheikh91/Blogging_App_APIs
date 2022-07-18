@@ -33,4 +33,10 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(InvalidCredentials.class)
+    public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(InvalidCredentials ex){
+        String message = ex.getMessage();
+        ApiResponse apiResponse = new ApiResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
 }

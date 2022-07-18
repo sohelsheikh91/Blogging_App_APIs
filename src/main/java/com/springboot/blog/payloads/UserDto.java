@@ -1,5 +1,6 @@
 package com.springboot.blog.payloads;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class UserDto {
     @NotEmpty
     @Size(min = 3,max = 10, message = "Password must be min of 3 chars and max of 10 chars")
     //@Pattern(regexp="^[a-zA-Z0-9]{8}",message="Must contain smallcase , uppercase and number")
+    //@JsonIgnore                 //To Hide Password
     private String password;
 
     @NotEmpty
